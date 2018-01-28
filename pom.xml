@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.nc</groupId>
+    <artifactId>taskManagerServer</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <jdk-version>1.8</jdk-version>
+
+        <fx-guice-version>1.1.0</fx-guice-version>
+        <guice-version>4.1.0</guice-version>
+
+        <java-fx-plugin-version>2.0</java-fx-plugin-version>
+        <maven-compiler-plugin-version>3.7.0</maven-compiler-plugin-version>
+    </properties>
+
+    <build>
+        <plugins>
+
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.nc.Main</mainClass>
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>1.7.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <shadedArtifactAttached>true</shadedArtifactAttached>
+                    <shadedClassifierName>shaded</shadedClassifierName>
+                    <transformers>
+                        <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                            <mainClass>com.nc.Main</mainClass>
+                        </transformer>
+                    </transformers>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+            <resource>
+                <directory>src/main/java</directory>
+            </resource>
+        </resources>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.cathive.fx</groupId>
+            <artifactId>fx-guice</artifactId>
+            <version>${fx-guice-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+            <version>${guice-version}</version>
+        </dependency>
+    </dependencies>
+</project>
